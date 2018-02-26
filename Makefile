@@ -1,8 +1,5 @@
 PACKAGE_NAME = netdata
 
-# The Git commit of netdata you want to package.
-NETDATA_GIT_REF = v1.9.0
-
 # The Ubuntu package's version number, as appears in spec/changelog.
 PACKAGE_VERSION = 1.9.0+dfsg
 
@@ -19,7 +16,7 @@ PACKAGE_VERSION = 1.9.0+dfsg
 # with `$(PACKAGE_VERSION)-$(PACKAGE_REVISION)` as version number.
 PACKAGE_REVISION = 0~xenial1
 
-ORIG_TARBALL_DIRNAME = netdata-$(NETDATA_GIT_REF)
+ORIG_TARBALL_DIRNAME = netdata-1.9.0
 DPKG_BUILDPACKAGE_ARGS =
 
 .PHONY: all source-package binary-package dev clean
@@ -33,7 +30,7 @@ source-package: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 dev: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 	rm -rf $(ORIG_TARBALL_DIRNAME)/debian
 	cp -dpR spec $(ORIG_TARBALL_DIRNAME)/debian
-	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -b -us -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -b -us -uc -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 clean:
 	rm -rf *.tar.gz *.xz *.git *.dsc *.buildinfo *.changes *.deb *.ddeb netdata-*
@@ -43,19 +40,11 @@ $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc: $(PACKAGE_NAME)_$(PA
 	test -e $(ORIG_TARBALL_DIRNAME) || tar xJf $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
 	rm -rf $(ORIG_TARBALL_DIRNAME)/debian
 	cp -dpR spec $(ORIG_TARBALL_DIRNAME)/debian
-	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -S -us -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -S -us -uc -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).deb: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
-	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -b -us -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -b -us -uc -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 
-$(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz: $(ORIG_TARBALL_DIRNAME).tar.gz
-	mkdir -p $(ORIG_TARBALL_DIRNAME)
-	tar -C $(ORIG_TARBALL_DIRNAME) --strip-components=1 -xzf $(ORIG_TARBALL_DIRNAME).tar.gz
-	tar -c $(ORIG_TARBALL_DIRNAME) | xz -zT 0 - > $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
-	rm -rf $(ORIG_TARBALL_DIRNAME)
-	@echo Written $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
-
-$(ORIG_TARBALL_DIRNAME).tar.gz:
-	wget --output-document=$(ORIG_TARBALL_DIRNAME).tar.gz \
-		https://github.com/firehol/netdata/archive/$(NETDATA_GIT_REF).tar.gz
+$(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz:
+	wget http://archive.ubuntu.com/ubuntu/pool/universe/n/netdata/$(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
