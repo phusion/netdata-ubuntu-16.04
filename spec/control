@@ -37,7 +37,7 @@ Description: real-time charts for system monitoring
 Package: netdata-data
 Architecture: all
 Multi-Arch: foreign
-Depends: fonts-font-awesome (>= 4.6),
+Depends: fonts-font-awesome (>= 4.5),
          libjs-bootstrap,
          ${misc:Depends},
          ${shlibs:Depends}

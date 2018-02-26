@@ -10,7 +10,14 @@ PACKAGE_VERSION = 1.9.0+dfsg
 # compared to the previous package, then reset this number to 1.
 #
 # Otherwise (you made other changes to the package), then bump this number by 1.
-PACKAGE_REVISION = 0
+#
+# Only modify the number before the `~` part. Don't touch the text after
+# the `~` part. For example, if you want to bump `1~xenial1` then
+# change it to `2~xenial1`.
+#
+# Also, be sure to edit spec/control and add a changelog entry there
+# with `$(PACKAGE_VERSION)-$(PACKAGE_REVISION)` as version number.
+PACKAGE_REVISION = 0~xenial1
 
 ORIG_TARBALL_DIRNAME = netdata-$(NETDATA_GIT_REF)
 DPKG_BUILDPACKAGE_ARGS =
@@ -29,7 +36,7 @@ dev: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 clean:
-	rm -rf *.tar.gz *.xz *.git *.dsc *.buildinfo *.changes *.deb *.ddeb ModSecurity-nginx-*
+	rm -rf *.tar.gz *.xz *.git *.dsc *.buildinfo *.changes *.deb *.ddeb netdata-*
 
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc: $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
