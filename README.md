@@ -93,10 +93,10 @@ You are then ready to upload the package to your preferred APT repository. The e
 
  1. If using Docker, import your GPG private key into the Docker container:
 
-     a. On your host OS, export your GPG private key to a file, located inside the same directory as enter-docker.sh.
-     b. Inside the container, run: `gpg --import yourkeyfile.asc`
-     c. Inside the container, run: `gpg --edit-key yourkeyemail@host.com`
-     d. Inside the GPG prompt, run: `trust`. Select "ultimate". Then run: `quit`.
+     1. On your host OS, export your GPG private key to a file, located inside the same directory as enter-docker.sh.
+     2. Inside the container, run: `gpg --import yourkeyfile.asc`
+     3. Inside the container, run: `gpg --edit-key yourkeyemail@host.com`
+     4. Inside the GPG prompt, run: `trust`. Select "ultimate". Then run: `quit`.
 
  2. Sign the source package: `debsign *source.changes`
 
