@@ -1,0 +1,79 @@
+From: Lennart Weller <lhw@ring0.de>
+Date: Mon, 18 Sep 2017 13:09:35 +0200
+Subject: remove file serve restrictions for symlinks
+
+---
+ src/web_client.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+--- a/src/web_client.c
++++ b/src/web_client.c
+@@ -382,8 +382,8 @@
+     snprintfz(webfilename, FILENAME_MAX, "%s/%s", netdata_configured_web_dir, filename);
+ 
+     // check if the file exists
+-    struct stat stat;
+-    if(lstat(webfilename, &stat) != 0) {
++    struct stat wstat;
++    if(stat(webfilename, &wstat) != 0) {
+         debug(D_WEB_CLIENT_ACCESS, "%llu: File '%s' is not found.", w->id, webfilename);
+         w->response.data->contenttype = CT_TEXT_HTML;
+         buffer_strcat(w->response.data, "File does not exist, or is not accessible: ");
+@@ -392,8 +392,8 @@
+     }
+ 
+     // check if the file is owned by expected user
+-    if(stat.st_uid != web_files_uid()) {
+-        error("%llu: File '%s' is owned by user %u (expected user %u). Access Denied.", w->id, webfilename, stat.st_uid, web_files_uid());
++    if(wstat.st_uid != web_files_uid()) {
++        error("%llu: File '%s' is owned by user %u (expected user %u). Access Denied.", w->id, webfilename, wstat.st_uid, web_files_uid());
+         w->response.data->contenttype = CT_TEXT_HTML;
+         buffer_strcat(w->response.data, "Access to file is not permitted: ");
+         buffer_strcat_htmlescape(w->response.data, webfilename);
+@@ -401,20 +401,20 @@
+     }
+ 
+     // check if the file is owned by expected group
+-    if(stat.st_gid != web_files_gid()) {
+-        error("%llu: File '%s' is owned by group %u (expected group %u). Access Denied.", w->id, webfilename, stat.st_gid, web_files_gid());
++    if(wstat.st_gid != web_files_gid()) {
++        error("%llu: File '%s' is owned by group %u (expected group %u). Access Denied.", w->id, webfilename, wstat.st_gid, web_files_gid());
+         w->response.data->contenttype = CT_TEXT_HTML;
+         buffer_strcat(w->response.data, "Access to file is not permitted: ");
+         buffer_strcat_htmlescape(w->response.data, webfilename);
+         return 403;
+     }
+ 
+-    if((stat.st_mode & S_IFMT) == S_IFDIR) {
++    if((wstat.st_mode & S_IFMT) == S_IFDIR) {
+         snprintfz(webfilename, FILENAME_MAX, "%s/index.html", filename);
+         return mysendfile(w, webfilename);
+     }
+ 
+-    if((stat.st_mode & S_IFMT) != S_IFREG) {
++    if((wstat.st_mode & S_IFMT) != S_IFREG) {
+         error("%llu: File '%s' is not a regular file. Access Denied.", w->id, webfilename);
+         w->response.data->contenttype = CT_TEXT_HTML;
+         buffer_strcat(w->response.data, "Access to file is not permitted: ");
+@@ -468,17 +468,17 @@
+     else if(strstr(filename, ".icns") != NULL)  w->response.data->contenttype = CT_IMAGE_ICNS;
+     else w->response.data->contenttype = CT_APPLICATION_OCTET_STREAM;
+ 
+-    debug(D_WEB_CLIENT_ACCESS, "%llu: Sending file '%s' (%ld bytes, ifd %d, ofd %d).", w->id, webfilename, stat.st_size, w->ifd, w->ofd);
++    debug(D_WEB_CLIENT_ACCESS, "%llu: Sending file '%s' (%ld bytes, ifd %d, ofd %d).", w->id, webfilename, wstat.st_size, w->ifd, w->ofd);
+ 
+     w->mode = WEB_CLIENT_MODE_FILECOPY;
+     web_client_enable_wait_receive(w);
+     web_client_disable_wait_send(w);
+     buffer_flush(w->response.data);
+-    w->response.rlen = stat.st_size;
++    w->response.rlen = wstat.st_size;
+ #ifdef __APPLE__
+-    w->response.data->date = stat.st_mtimespec.tv_sec;
++    w->response.data->date = wstat.st_mtimespec.tv_sec;
+ #else
+-    w->response.data->date = stat.st_mtim.tv_sec;
++    w->response.data->date = wstat.st_mtim.tv_sec;
+ #endif /* __APPLE__ */
+     buffer_cacheable(w->response.data);
+ 

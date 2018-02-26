@@ -1,0 +1,58 @@
+#!/usr/bin/make -f
+
+# Find the arch we are building for, as this determines
+# the location of plugins in /usr/lib
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+TOP = $(CURDIR)/debian/netdata
+
+export DH_VERBOSE = 1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+export DEB_CFLAGS_MAINT_APPEND  = -Wall -O3
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+MULTIARCH_INSTALL = debian/netdata.postinst
+
+%:
+	# For jessie and beyond
+	#
+	dh $@ --with autoreconf,systemd
+
+	# For wheezy or other non-systemd distributions use the following. You
+	# should also see contrib/README.md which gives details of updates to
+	# make to debian/control.
+	#
+	#dh $@ --with autoreconf
+
+override_dh_auto_configure:
+	dh_auto_configure -- --with-math
+
+override_dh_auto_build:
+	dh_auto_build --parallel
+
+$(MULTIARCH_INSTALL): % : %.in
+	sed 's/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g' $< > $@
+
+override_dh_install: $(MULTIARCH_INSTALL)
+	dh_install
+
+override_dh_install-arch: $(MULTIARCH_INSTALL)
+	dh_install
+	# Remove unneeded .keep files
+	find "$(TOP)" -name .keep -delete
+
+override_dh_install-indep:
+	dh_install
+	# Deactivate automatic update check
+	echo 0 > $(TOP)-data/usr/share/netdata/web/version.txt
+
+override_dh_fixperms-arch:
+	dh_fixperms
+
+	# apps.plugin should only be runnable by the netdata user. It will be
+	# given extra capabilities in the postinst script.
+	#
+	chmod 0754 $(TOP)/usr/lib/$(DEB_HOST_MULTIARCH)/netdata/plugins.d/apps.plugin
+	chmod 0644 $(TOP)/usr/lib/$(DEB_HOST_MULTIARCH)/netdata/plugins.d/loopsleepms.sh.inc
+	chmod 0644 $(TOP)/usr/lib/$(DEB_HOST_MULTIARCH)/netdata/charts.d/*.sh
+	chmod 0644 $(TOP)/usr/lib/$(DEB_HOST_MULTIARCH)/netdata/python.d/*.py

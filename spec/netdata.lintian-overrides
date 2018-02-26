@@ -1,0 +1,3 @@
+# See Debian policy 10.9. apps.plugin has extra capabilities, so don't let
+# normal users run it.
+netdata: non-standard-executable-perm usr/lib/*/netdata/plugins.d/apps.plugin 0754 != 0755

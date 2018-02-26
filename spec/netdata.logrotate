@@ -1,0 +1,13 @@
+/var/log/netdata/*log {
+	compress
+	create 0640 netdata adm
+	weekly
+	delaycompress
+	missingok
+	notifempty
+	rotate 14
+	sharedscripts
+	postrotate
+		/bin/kill -HUP `pidof netdata 2>/dev/null` 2>/dev/null || true
+	endscript
+}

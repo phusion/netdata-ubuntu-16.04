@@ -1,0 +1,33 @@
+.TH NETDATA "1" "April 2016" "" "User Commands"
+.SH NAME
+netdata \- real-time charts for system monitoring
+.SH DESCRIPTION
+This manual page documents briefly the
+.B netdata
+command.
+.PP
+The netdata daemon is usually started by an initscript or a systemd service.
+.SH USAGE
+\fI\,/usr/sbin/netdata\/\fP [\-d] [\-l LINES_TO_SAVE] [\-u UPDATE_TIMER] [\-p LISTEN_PORT] [\-dl debug log file] [\-df debug flags]
+.HP
+\fB\-c\fR CONFIG FILE the configuration file to load. Default: \fI\,/etc/netdata/netdata.conf\/\fP.
+.HP
+\fB\-l\fR LINES_TO_SAVE can be from 5 to 864000 lines in JSON data. Default: 3600.
+.HP
+\fB\-t\fR UPDATE_TIMER can be from 1 to 3600 seconds. Default: 1.
+.HP
+\fB\-p\fR LISTEN_PORT can be from 1 to 65535. Default: 19999.
+.HP
+\fB\-u\fR USERNAME can be any system username to run as. Default: none.
+.HP
+\fB\-ch\fR path to access host \fI\,/proc\/\fP and \fI\,/sys\/\fP when running in a container. Default: empty.
+.HP
+\fB\-nd\fR or \fB\-nodeamon\fR to disable forking in the background. Default: unset.
+.HP
+\fB\-df\fR FLAGS debug options. Default: 0x00000000.
+.SH "SEE ALSO"
+The full documentation for netdata is available in /usr/share/doc/netdata
+.SH AUTHOR
+netadata was written by Costa Tsaousis <costa@tsaousis.gr>
+.PP
+This manual page was written by Federico Ceratto <federico@debian.org> for the Debian project and may be used by others.

@@ -1,0 +1,36 @@
+#! /bin/sh
+
+set -e
+
+case "$1" in
+  configure)
+        if [ -z "$2" ]; then
+          if ! getent group netdata >/dev/null; then
+              addgroup --quiet --system netdata
+          fi
+
+          if ! getent passwd netdata >/dev/null; then
+              adduser --quiet --system --ingroup netdata --home /var/lib/netdata --no-create-home netdata
+              mkdir -p /var/lib/netdata
+          fi
+
+          for dir_name in /var/cache/netdata /var/lib/netdata; do
+              if ! dpkg-statoverride --list "$dir_name" >/dev/null 2>&1; then
+                  dpkg-statoverride --update --add netdata netdata 0755 "$dir_name"
+              fi
+
+          done
+        fi
+
+        chown -R root:netdata /usr/lib/@DEB_HOST_MULTIARCH@/netdata/plugins.d
+        setcap cap_dac_read_search,cap_sys_ptrace+ep /usr/lib/@DEB_HOST_MULTIARCH@/netdata/plugins.d/apps.plugin
+        chown netdata:adm /var/log/netdata
+        chmod 02750 /var/log/netdata
+
+#PERMS#
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0

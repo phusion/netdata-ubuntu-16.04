@@ -1,0 +1,34 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+    remove)
+        ;;
+
+    purge)
+        for dir_name in /var/cache/netdata /var/lib/netdata; do
+            if dpkg-statoverride --list | grep -qw "$dir_name"; then
+                dpkg-statoverride --remove "$dir_name"
+            fi
+        done
+
+        rm -rf /var/cache/netdata /var/log/netdata
+
+        if getent passwd netdata >/dev/null; then
+            deluser --quiet --system netdata || echo "Unable to remove netdata user"
+        fi
+
+        if getent group netdata >/dev/null; then
+            delgroup --quiet --system netdata || echo "Unable to remove netdata group"
+        fi
+
+        ;;
+
+    *)
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0

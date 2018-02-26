@@ -1,0 +1,137 @@
+netdata (1.9.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #885634)
+
+ -- Federico Ceratto <federico@debian.org>  Fri, 26 Jan 2018 23:57:51 +0000
+
+netdata (1.8.0+dfsg-1) unstable; urgency=medium
+
+  [ Lennart Weller ]
+  * New upstream release
+  * Maintscript update to hopefully rename old config files (Closes: #869200)
+
+ -- Federico Ceratto <federico@debian.org>  Tue, 19 Sep 2017 18:40:00 +0100
+
+netdata (1.7.0+dfsg-1) unstable; urgency=medium
+
+  [ Lennart Weller ]
+  * New upstream release (Closes: #868662)
+  * Rudimentary solution to the sysvinit conundrum (Closes: #861713)
+  * Remove old config files from <1.6.0 with maintscript (Closes: #869200)
+  * Add a recommendation for curl. Fixing telegram pushes (Closes: #872799)
+
+  [ Federico Ceratto ]
+  * Remove James Cowgill from Uploaders (Closes: #872245)
+
+ -- Federico Ceratto <federico@debian.org>  Thu, 24 Aug 2017 19:38:48 +0100
+
+netdata (1.6.0+dfsg-3) unstable; urgency=medium
+
+  * Add fping Recommends and CAP_NET_RAW capability (Closes: #864370)
+
+ -- Federico Ceratto <federico@debian.org>  Sat, 15 Jul 2017 19:46:27 +0100
+
+netdata (1.6.0+dfsg-2) unstable; urgency=medium
+
+  [ Lennart Weller ]
+  * Change logrotate to only re-open logfiles
+  * Change pidfile to existing location for sysvinit (Closes: #861713)
+  * Change After network to After network-online (Closes: #862455)
+
+ -- Federico Ceratto <federico@debian.org>  Sat, 27 May 2017 12:40:39 +0100
+
+netdata (1.6.0+dfsg-1) unstable; urgency=medium
+
+  [ Federico Ceratto ]
+  * New upstream release (Closes: #858757)
+
+  [ Lennart Weller ]
+  * Make all of /var writeable avoiding any other MTA problems (Closes: #856502)
+  * Add CAP_SETUID permission for the service (Closes: #856500)
+  * Change logrotate to weekly (Closes: #857305)
+    We do the weekly logrotate for now as SIGHUP is not working correctly.
+    See https://github.com/firehol/netdata/issues/805
+
+ -- Federico Ceratto <federico@debian.org>  Wed, 03 May 2017 14:21:50 +0100
+
+netdata (1.5.0+dfsg-4) unstable; urgency=medium
+
+  * Update service unit configuration (Closes: #856412)
+  * Fix exim path, thanks to Sven Hartge (Closes: #856252)
+
+ -- Federico Ceratto <federico@debian.org>  Wed, 01 Mar 2017 11:53:38 +0000
+
+netdata (1.5.0+dfsg-3) unstable; urgency=medium
+
+  * Update service unit configuration (Closes: #851852)
+
+ -- Federico Ceratto <federico@debian.org>  Sun, 26 Feb 2017 23:58:43 +0000
+
+netdata (1.5.0+dfsg-2) unstable; urgency=medium
+
+  [ Lennart Weller ]
+  * Include node.d modules now as we recommend nodejs (Closes: #856182)
+  * Move data dependencies to data package
+
+ -- Federico Ceratto <federico@debian.org>  Sun, 26 Feb 2017 18:27:33 +0000
+
+netdata (1.5.0+dfsg-1) unstable; urgency=medium
+
+  [ Lennart Weller ]
+  * New upstream release (Closes: #850004, #854401)
+  * Removed unnecessary patches
+  * Fixed lintian-overrides
+  * Fixed script permissions
+  * Include versioned assets
+
+ -- Federico Ceratto <federico@debian.org>  Sun, 12 Feb 2017 14:03:06 +0000
+
+netdata (1.4.0+dfsg-3) unstable; urgency=medium
+
+  * Install Python plugins
+  * Add alarm-notify.sh (Closes: #848730)
+  * Adjust OOM score (Closes: #848642)
+  * Fix dh_fixperms (Closes: #848351)
+
+ -- Federico Ceratto <federico@debian.org>  Mon, 02 Jan 2017 20:35:53 +0000
+
+netdata (1.4.0+dfsg-2) unstable; urgency=medium
+
+  * Fix init script
+
+ -- Federico Ceratto <federico@debian.org>  Fri, 23 Dec 2016 18:30:45 +0000
+
+netdata (1.4.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #848311)
+
+ -- Federico Ceratto <federico@debian.org>  Sun, 18 Dec 2016 23:59:27 +0000
+
+netdata (1.3.0+dfsg-1) UNRELEASED; urgency=medium
+
+  [ Lennart Weller ]
+  * New upstream version. Fixes license issues
+  * Add missing config files
+  * Further restrict process permissions
+
+ -- Federico Ceratto <federico@debian.org>  Sat, 08 Oct 2016 16:43:43 +0100
+
+netdata (1.2.0+dfsg-2) unstable; urgency=low
+
+  * Remove Multi-Arch from binary package
+  * Fix Vcs-links
+
+ -- Lennart Weller <lhw@ring0.de>  Fri, 22 Jul 2016 16:09:04 +0200
+
+netdata (1.2.0+dfsg-1) unstable; urgency=low
+
+  [ Federico Ceratto ]
+  * Initial release (Closes: #819661)
+  * Removed update button
+
+  [ Lennart Weller ]
+  * Split the main package into appropriate sub packages
+  * DFSG-compliant via debian/copyright file removal
+  * Linked to Javascript packages available in debian
+
+ -- Lennart Weller <lhw@ring0.de>  Fri, 22 Jul 2016 11:28:50 +0200

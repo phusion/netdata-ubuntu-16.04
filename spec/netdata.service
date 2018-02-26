@@ -1,0 +1,53 @@
+# netdata systemd target
+
+[Unit]
+Description=netdata - Real-time performance monitoring
+Documentation=man:netdata
+Documentation=file:///usr/share/doc/netdata/html/index.html
+Documentation=https://github.com/firehol/netdata
+After=network-online.target httpd.service squid.service nfs-server.service mysqld.service named.service postfix.service
+ConditionPathExists=/etc/netdata/netdata.conf
+
+[Service]
+Type=simple
+Environment="netdata_LOG_LOCATION=/var/log/netdata/log"
+ExecStart=/usr/sbin/netdata -D
+ExecReload=/usr/sbin/netdata reload
+TimeoutStopSec=10
+KillMode=mixed
+KillSignal=SIGTERM
+OOMScoreAdjust=-900
+
+User=netdata
+Group=netdata
+Restart=on-abnormal
+RestartSec=2s
+LimitNOFILE=65536
+
+WorkingDirectory=/tmp
+
+# Hardening
+
+NoNewPrivileges=false
+PermissionsStartOnly=true
+# CAP_SETGID is required for setgroups()
+# CAP_NET_RAW is needed by fping, see #864370
+CapabilityBoundingSet=CAP_DAC_READ_SEARCH CAP_SYS_PTRACE CAP_SETGID CAP_SETUID CAP_NET_RAW
+PrivateTmp=true
+ProtectHome=read-only
+ProtectSystem=full
+
+ReadOnlyDirectories=/
+ReadWriteDirectories=/proc/self
+ReadWriteDirectories=/var
+
+# Access to devices and kernel modules and tunables is required
+PrivateDevices=no
+ProtectKernelModules=no
+ProtectKernelTunables=no
+
+StandardOutput=syslog+console
+StandardError=syslog+console
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+From: Sven Hartge <sven@svenhartge.de>
+Date: Mon, 18 Sep 2017 13:11:05 +0200
+Subject: Debianize path to exim4 binary
+
+---
+ conf.d/python.d/exim.conf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/conf.d/python.d/exim.conf
++++ b/conf.d/python.d/exim.conf
+@@ -90,4 +90,4 @@
+ # AUTO-DETECTION JOBS
+ 
+ local:
+-  command: 'exim -bpc'
++  command: '/usr/sbin/exim4 -bpc'

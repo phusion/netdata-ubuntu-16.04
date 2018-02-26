@@ -1,0 +1,14 @@
+#libjs-bootstrap
+/usr/share/javascript/bootstrap/fonts/glyphicons-halflings-regular.eot usr/share/netdata/web/fonts/glyphicons-halflings-regular.eot
+/usr/share/javascript/bootstrap/fonts/glyphicons-halflings-regular.svg usr/share/netdata/web/fonts/glyphicons-halflings-regular.svg
+/usr/share/javascript/bootstrap/fonts/glyphicons-halflings-regular.ttf usr/share/netdata/web/fonts/glyphicons-halflings-regular.ttf
+/usr/share/javascript/bootstrap/fonts/glyphicons-halflings-regular.woff usr/share/netdata/web/fonts/glyphicons-halflings-regular.woff
+/usr/share/javascript/bootstrap/fonts/glyphicons-halflings-regular.woff2 usr/share/netdata/web/fonts/glyphicons-halflings-regular.woff2
+#fonts-font-awesome
+/usr/share/fonts-font-awesome/fonts/FontAwesome.otf usr/share/netdata/web/fonts/FontAwesome.otf
+/usr/share/fonts-font-awesome/fonts/fontawesome-webfont.eot usr/share/netdata/web/fonts/fontawesome-webfont.eot
+/usr/share/fonts-font-awesome/fonts/fontawesome-webfont.svg usr/share/netdata/web/fonts/fontawesome-webfont.svg
+/usr/share/fonts-font-awesome/fonts/fontawesome-webfont.ttf usr/share/netdata/web/fonts/fontawesome-webfont.ttf
+/usr/share/fonts-font-awesome/fonts/fontawesome-webfont.woff usr/share/netdata/web/fonts/fontawesome-webfont.woff
+/usr/share/fonts-font-awesome/fonts/fontawesome-webfont.woff2 usr/share/netdata/web/fonts/fontawesome-webfont.woff2
+/usr/share/fonts-font-awesome/css/font-awesome.min.css usr/share/netdata/web/css/font-awesome.min.css
