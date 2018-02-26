@@ -5,7 +5,7 @@ Maintainer: Lennart Weller <lhw@ring0.de>
 Uploaders: Federico Ceratto <federico@debian.org>
 Build-Depends: debhelper (>= 9),
                dh-autoreconf,
-               debhelper (>= 9.20160709),
+               dh-systemd,
                dpkg-dev (>= 1.13.19),
                pkg-config,
                uuid-dev,

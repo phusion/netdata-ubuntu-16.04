@@ -1,3 +1,9 @@
+netdata (1.9.0+dfsg-0) xenial; urgency=medium
+
+  * Backport to Ubuntu 16.04
+
+ -- Hongli Lai <hongli@phusion.nl>  Mon, 26 Feb 2018 23:57:51 +0000
+
 netdata (1.9.0+dfsg-1) unstable; urgency=medium
 
   * New upstream release (Closes: #885634)

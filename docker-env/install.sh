@@ -3,7 +3,8 @@ set -ex
 
 apt-get update
 apt-get install -y devscripts gdebi-core mc sudo bindfs build-essential python \
-	ccache debhelper quilt
+	ccache debhelper quilt eatmydata nano wget \
+	dh-autoreconf dh-systemd pkg-config uuid-dev zlib1g-dev
 
 echo 'alias ls="ls --color -Fh"' >> /etc/bash.bashrc
 echo 'alias dir="ls -l"' >> /etc/bash.bashrc
@@ -15,6 +16,7 @@ adduser --uid 1000 --gid 1000 --disabled-password app
 usermod -L app
 
 cp /netdata_ubuntu_build/inithostmount.sh /sbin/inithostmount
+cp /netdata_ubuntu_build/initenv.sh /sbin/initenv
 
 rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 rm -rf /netdata_ubuntu_build

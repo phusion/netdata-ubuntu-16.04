@@ -6,4 +6,4 @@ exec docker run -t -i --rm --init --privileged \
 	-e APP_GID="$(id -g)" \
 	-v "$(pwd):/host.real" \
 	phusion/netdata-ubuntu-16.04-builder:latest \
-	sudo -u app -H bash
+	sudo -u app -H /sbin/initenv bash
