@@ -1,4 +1,4 @@
-netdata (1.9.0+dfsg-0) xenial; urgency=medium
+netdata (1.9.0+dfsg-0~xenial1) xenial; urgency=medium
 
   * Backport to Ubuntu 16.04
 
