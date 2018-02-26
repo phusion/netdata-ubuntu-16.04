@@ -33,7 +33,7 @@ source-package: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 dev: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 	rm -rf $(ORIG_TARBALL_DIRNAME)/debian
 	cp -dpR spec $(ORIG_TARBALL_DIRNAME)/debian
-	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -b -us -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 clean:
 	rm -rf *.tar.gz *.xz *.git *.dsc *.buildinfo *.changes *.deb *.ddeb netdata-*
@@ -43,10 +43,10 @@ $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc: $(PACKAGE_NAME)_$(PA
 	test -e $(ORIG_TARBALL_DIRNAME) || tar xJf $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
 	rm -rf $(ORIG_TARBALL_DIRNAME)/debian
 	cp -dpR spec $(ORIG_TARBALL_DIRNAME)/debian
-	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -S -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -S -us -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).deb: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
-	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd $(ORIG_TARBALL_DIRNAME) && dpkg-buildpackage -b -us -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz: $(ORIG_TARBALL_DIRNAME).tar.gz
